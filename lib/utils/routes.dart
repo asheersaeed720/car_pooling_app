@@ -11,8 +11,8 @@ final List<GetPage<dynamic>> routes = [
     page: () => const AuthScreen(),
   ),
   GetPage(
-    name: LogInScreen.routeName,
-    page: () => const LogInScreen(),
+    name: LogInSignUpScreen.routeName,
+    page: () => const LogInSignUpScreen(),
   ),
   GetPage(
     name: HomeScreen.routeName,

@@ -6,15 +6,24 @@ import 'package:car_pooling_app/src/auth/views/auth_screen.dart';
 import 'package:car_pooling_app/src/network_manager.dart';
 import 'package:car_pooling_app/utils/custom_snack_bar.dart';
 import 'package:car_pooling_app/utils/display_toast_message.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthController extends NetworkManager {
   final _authService = Get.find<AuthService>();
 
+  final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+
   final UserModel userFormModel = UserModel();
 
   final GetStorage _getStorage = GetStorage();
+
+  bool isSignupScreen = true;
+
+  String? gender = 'male';
 
   Map currentUserData = {};
 
@@ -38,39 +47,45 @@ class AuthController extends NetworkManager {
     super.onInit();
   }
 
-  Future<void> handleLogIn() async {
-    if (connectionType != 0) {
-      try {
-        var response = await _authService.logInUser(userFormModel);
-        if (response.statusCode == 200) {
-          _getStorage.write(
-            'user',
-            {
-              'key': "${response.body['key']}",
-              ...response.body['user'],
-            },
-          );
-          currentUserData = getCurrentUser();
-          if (isRememberMe) {
-            _getStorage.write('email', userFormModel.email);
-            rememberEmail = _getStorage.read('email');
-          }
-          update();
-          Get.offAllNamed(AuthScreen.routeName);
-        } else if (response.statusCode == 404) {
-          displayToastMessage('Invalid Credentials');
-        } else {
-          displayToastMessage('Something went wrong');
-        }
-        log('loginRes ${response.body}, type:${response.body.runtimeType}');
-      } catch (e) {
-        displayToastMessage(e);
-        rethrow;
-      }
-    } else {
-      customSnackBar('Network error', 'Please try again later');
-    }
+  void selectGender(String? genderVal) {
+    log('$genderVal');
+    gender = genderVal;
+    update();
   }
+
+  // Future<void> handleLogIn() async {
+  //   if (connectionType != 0) {
+  //     try {
+  //       var response = await _authService.logInUser(userFormModel);
+  //       if (response.statusCode == 200) {
+  //         _getStorage.write(
+  //           'user',
+  //           {
+  //             'key': "${response.body['key']}",
+  //             ...response.body['user'],
+  //           },
+  //         );
+  //         currentUserData = getCurrentUser();
+  //         if (isRememberMe) {
+  //           _getStorage.write('email', userFormModel.email);
+  //           rememberEmail = _getStorage.read('email');
+  //         }
+  //         update();
+  //         Get.offAllNamed(AuthScreen.routeName);
+  //       } else if (response.statusCode == 404) {
+  //         displayToastMessage('Invalid Credentials');
+  //       } else {
+  //         displayToastMessage('Something went wrong');
+  //       }
+  //       log('loginRes ${response.body}, type:${response.body.runtimeType}');
+  //     } catch (e) {
+  //       displayToastMessage(e);
+  //       rethrow;
+  //     }
+  //   } else {
+  //     customSnackBar('Network error', 'Please try again later');
+  //   }
+  // }
 
   Future<void> handleSignUp() async {
     if (connectionType != 0) {

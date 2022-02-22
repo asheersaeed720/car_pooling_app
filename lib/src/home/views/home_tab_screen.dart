@@ -3,8 +3,6 @@ import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/colors.dart';
-
 List<Map> doctors = [
   {
     'img': 'assets/images/doctor02.png',
@@ -69,10 +67,7 @@ class HomeTab extends StatelessWidget {
                 TextButton(
                   child: Text(
                     'See All',
-                    style: TextStyle(
-                      color: Color(MyColors.yellow01),
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(),
                   ),
                   onPressed: () {},
                 )
@@ -90,7 +85,6 @@ class HomeTab extends StatelessWidget {
             Text(
               'Top Doctor',
               style: TextStyle(
-                color: Color(MyColors.header01),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -133,7 +127,6 @@ class TopDoctorCard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              color: Color(MyColors.grey01),
               child: Image(
                 width: 100,
                 image: AssetImage(img),
@@ -148,7 +141,6 @@ class TopDoctorCard extends StatelessWidget {
                 Text(
                   doctorName,
                   style: TextStyle(
-                    color: Color(MyColors.header01),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -158,7 +150,6 @@ class TopDoctorCard extends StatelessWidget {
                 Text(
                   doctorTitle,
                   style: TextStyle(
-                    color: Color(MyColors.grey02),
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -171,7 +162,6 @@ class TopDoctorCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.star,
-                      color: Color(MyColors.yellow02),
                       size: 18,
                     ),
                     SizedBox(
@@ -179,7 +169,6 @@ class TopDoctorCard extends StatelessWidget {
                     ),
                     Text(
                       '4.0 - 50 Reviews',
-                      style: TextStyle(color: Color(MyColors.grey02)),
                     )
                   ],
                 )
@@ -236,7 +225,6 @@ class AppointmentCard extends StatelessWidget {
                             ),
                             Text(
                               'Dental Specialist',
-                              style: TextStyle(color: Color(MyColors.text01)),
                             ),
                           ],
                         ),
@@ -257,7 +245,6 @@ class AppointmentCard extends StatelessWidget {
           width: double.infinity,
           height: 10,
           decoration: BoxDecoration(
-            color: Color(MyColors.bg02),
             borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
@@ -269,7 +256,6 @@ class AppointmentCard extends StatelessWidget {
           width: double.infinity,
           height: 10,
           decoration: BoxDecoration(
-            color: Color(MyColors.bg03),
             borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
@@ -317,7 +303,6 @@ class ScheduleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(MyColors.bg01),
         borderRadius: BorderRadius.circular(10),
       ),
       width: double.infinity,
@@ -372,7 +357,6 @@ class CategoryIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Color(MyColors.bg01),
       onTap: () {},
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -382,7 +366,6 @@ class CategoryIcon extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Color(MyColors.bg),
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Icon(
@@ -418,7 +401,6 @@ class SearchInput extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(MyColors.bg),
         borderRadius: BorderRadius.circular(5),
       ),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -429,7 +411,6 @@ class SearchInput extends StatelessWidget {
             padding: const EdgeInsets.only(top: 3),
             child: Icon(
               Icons.search,
-              color: Color(MyColors.purple02),
             ),
           ),
           const SizedBox(

@@ -1,9 +1,5 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-
-import '../../../utils/colors.dart';
 
 class ScheduleTab extends StatefulWidget {
   const ScheduleTab({Key? key}) : super(key: key);
@@ -12,7 +8,7 @@ class ScheduleTab extends StatefulWidget {
   State<ScheduleTab> createState() => _ScheduleTabState();
 }
 
-enum FilterStatus { Upcoming, Complete, Cancel }
+enum FilterStatus { upcoming, complete, cancel }
 
 List<Map> schedules = [
   {
@@ -21,7 +17,7 @@ List<Map> schedules = [
     'doctorTitle': 'Dental Specialist',
     'reservedDate': 'Monday, Aug 29',
     'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Upcoming
+    'status': FilterStatus.upcoming
   },
   {
     'img': 'assets/images/doctor02.png',
@@ -29,7 +25,7 @@ List<Map> schedules = [
     'doctorTitle': 'Skin Specialist',
     'reservedDate': 'Monday, Sep 29',
     'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Upcoming
+    'status': FilterStatus.upcoming
   },
   {
     'img': 'assets/images/doctor03.jpeg',
@@ -37,7 +33,7 @@ List<Map> schedules = [
     'doctorTitle': 'General Specialist',
     'reservedDate': 'Monday, Jul 29',
     'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Upcoming
+    'status': FilterStatus.upcoming
   },
   {
     'img': 'assets/images/doctor04.jpeg',
@@ -45,7 +41,7 @@ List<Map> schedules = [
     'doctorTitle': 'Something Specialist',
     'reservedDate': 'Monday, Jul 29',
     'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Complete
+    'status': FilterStatus.complete
   },
   {
     'img': 'assets/images/doctor05.jpeg',
@@ -53,7 +49,7 @@ List<Map> schedules = [
     'doctorTitle': 'Other Specialist',
     'reservedDate': 'Monday, Jul 29',
     'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Cancel
+    'status': FilterStatus.cancel
   },
   {
     'img': 'assets/images/doctor05.jpeg',
@@ -61,12 +57,12 @@ List<Map> schedules = [
     'doctorTitle': 'Other Specialist',
     'reservedDate': 'Monday, Jul 29',
     'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Cancel
+    'status': FilterStatus.cancel
   },
 ];
 
 class _ScheduleTabState extends State<ScheduleTab> {
-  FilterStatus status = FilterStatus.Upcoming;
+  FilterStatus status = FilterStatus.upcoming;
   Alignment _alignment = Alignment.centerLeft;
 
   @override
@@ -95,7 +91,6 @@ class _ScheduleTabState extends State<ScheduleTab> {
                   width: double.infinity,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Color(MyColors.bg),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -106,14 +101,14 @@ class _ScheduleTabState extends State<ScheduleTab> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                if (filterStatus == FilterStatus.Upcoming) {
-                                  status = FilterStatus.Upcoming;
+                                if (filterStatus == FilterStatus.upcoming) {
+                                  status = FilterStatus.upcoming;
                                   _alignment = Alignment.centerLeft;
-                                } else if (filterStatus == FilterStatus.Complete) {
-                                  status = FilterStatus.Complete;
+                                } else if (filterStatus == FilterStatus.complete) {
+                                  status = FilterStatus.complete;
                                   _alignment = Alignment.center;
-                                } else if (filterStatus == FilterStatus.Cancel) {
-                                  status = FilterStatus.Cancel;
+                                } else if (filterStatus == FilterStatus.cancel) {
+                                  status = FilterStatus.cancel;
                                   _alignment = Alignment.centerRight;
                                 }
                               });
@@ -121,7 +116,7 @@ class _ScheduleTabState extends State<ScheduleTab> {
                             child: Center(
                               child: Text(
                                 filterStatus.name,
-                                style: kFilterStyle,
+                                // style: kFilterStyle,
                               ),
                             ),
                           ),
@@ -182,7 +177,6 @@ class _ScheduleTabState extends State<ScheduleTab> {
                                   Text(
                                     _schedule['doctorName'],
                                     style: TextStyle(
-                                      color: Color(MyColors.header01),
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -192,7 +186,6 @@ class _ScheduleTabState extends State<ScheduleTab> {
                                   Text(
                                     _schedule['doctorTitle'],
                                     style: TextStyle(
-                                      color: Color(MyColors.grey02),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -251,7 +244,6 @@ class DateTimeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(MyColors.bg03),
         borderRadius: BorderRadius.circular(10),
       ),
       width: double.infinity,

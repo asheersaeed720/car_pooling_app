@@ -1,7 +1,6 @@
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/colors.dart';
 import 'home_tab_screen.dart';
 import 'schedule_tab_screen.dart';
 
@@ -38,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
         elevation: 0,
         toolbarHeight: 0,
       ),
@@ -58,13 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                   border: Border(
                     top: _selectedIndex == navigationBarItem['index']
-                        ? BorderSide(color: Color(MyColors.bg01), width: 5)
+                        ? BorderSide(width: 5)
                         : BorderSide.none,
                   ),
                 ),
                 child: Icon(
                   navigationBarItem['icon'],
-                  color: _selectedIndex == 0 ? Color(MyColors.bg01) : Color(MyColors.bg02),
                 ),
               ),
               label: '',

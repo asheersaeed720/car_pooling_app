@@ -1,8 +1,6 @@
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/colors.dart';
-
 class HomeDetailScreen extends StatelessWidget {
   static const String routeName = '/home-detail';
 
@@ -187,7 +185,6 @@ class NumberCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Color(MyColors.bg03),
         ),
         padding: EdgeInsets.symmetric(
           vertical: 30,
@@ -198,7 +195,6 @@ class NumberCard extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: Color(MyColors.grey02),
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
@@ -209,7 +205,6 @@ class NumberCard extends StatelessWidget {
             Text(
               value,
               style: TextStyle(
-                color: Color(MyColors.header01),
                 fontSize: 15,
                 fontWeight: FontWeight.w800,
               ),
@@ -240,11 +235,10 @@ class DetailDoctorCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       'Dr. Josua Simorangkir',
-                      style:
-                          TextStyle(color: Color(MyColors.header01), fontWeight: FontWeight.w700),
+                      style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       height: 10,
@@ -252,7 +246,6 @@ class DetailDoctorCard extends StatelessWidget {
                     Text(
                       'Heart Specialist',
                       style: TextStyle(
-                        color: Color(MyColors.grey02),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
