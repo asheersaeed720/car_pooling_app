@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Gender {
+class GenderModel {
   String name;
   IconData icon;
   bool isSelected;
 
-  Gender(this.name, this.icon, this.isSelected);
+  GenderModel(this.name, this.icon, this.isSelected);
 }

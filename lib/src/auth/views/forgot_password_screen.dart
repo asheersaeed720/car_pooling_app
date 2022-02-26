@@ -1,7 +1,7 @@
 import 'package:car_pooling_app/src/auth/auth_controller.dart';
 import 'package:car_pooling_app/utils/constants.dart';
-import 'package:car_pooling_app/utils/input_decoration.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
+import 'package:car_pooling_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,29 +38,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                     Text('Password reset!', style: kTitleStyle),
                     const Text('This action will send password at your email.'),
                     const SizedBox(height: 18.0),
-                    TextFormField(
-                      initialValue: _authController.userFormModel.email,
-                      onChanged: (value) {
-                        _authController.userFormModel.email = value;
-                      },
-                      validator: (value) {
-                        bool isValidEmail = RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                            .hasMatch('$value');
-                        if (value!.isEmpty) {
-                          return 'Required';
-                        } else if (!isValidEmail) {
-                          return 'Invalid Email';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      decoration: buildTextFieldInputDecoration(
-                        context,
-                        preffixIcon: Icons.email_outlined,
-                        hintTxt: 'Email',
-                      ),
+                    const CustomTextField(
+                      hintText: 'Email',
+                      isEmail: true,
                     ),
                     const SizedBox(height: 18.0),
                     CustomAsyncBtn(
@@ -72,42 +52,6 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildEmailTextField(context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 5,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        autofocus: true,
-        validator: (value) {
-          bool isValidEmail =
-              RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                  .hasMatch('$value');
-          if (value!.isEmpty) {
-            return 'Required';
-          } else if (!isValidEmail) {
-            return 'Invalid Email';
-          }
-          return null;
-        },
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        decoration: buildTextFieldInputDecoration(
-          context,
-          hintTxt: 'Email',
-          preffixIcon: Icons.email,
         ),
       ),
     );

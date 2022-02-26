@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:car_pooling_app/src/auth/auth_service.dart';
 import 'package:car_pooling_app/src/auth/models/gender.dart';
-import 'package:car_pooling_app/src/auth/models/user.dart';
-import 'package:car_pooling_app/src/auth/views/auth_screen.dart';
+import 'package:car_pooling_app/src/auth/views/login_screen.dart';
 import 'package:car_pooling_app/src/network_manager.dart';
 import 'package:car_pooling_app/utils/custom_snack_bar.dart';
 import 'package:car_pooling_app/utils/display_toast_message.dart';
@@ -14,32 +13,19 @@ import 'package:get_storage/get_storage.dart';
 class AuthController extends NetworkManager {
   final _authService = Get.find<AuthService>();
 
-  final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
-
-  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
-
-  final UserModel userFormModel = UserModel();
-
   final GetStorage _getStorage = GetStorage();
 
-  bool isSignupScreen = true;
-
-  List<Gender> gendersList = [
-    Gender("Male", Icons.male, true),
-    Gender("Female", Icons.female, false),
-    Gender("Others", Icons.transgender, false),
+  List<GenderModel> gendersList = [
+    GenderModel("Male", Icons.male, true),
+    GenderModel("Female", Icons.female, false),
+    GenderModel("Others", Icons.transgender, false),
   ];
 
   Map currentUserData = {};
 
   bool isLoading = false;
 
-  bool _obscureText = true;
-  bool get obscureText => _obscureText;
-  set obscureText(bool newObscureVal) {
-    _obscureText = newObscureVal;
-    update();
-  }
+  bool obscureText = true;
 
   String rememberEmail = '';
 
@@ -52,10 +38,15 @@ class AuthController extends NetworkManager {
     super.onInit();
   }
 
-  Future<void> handleLogIn() async {
+  void togglePw() {
+    obscureText = !obscureText;
+    update();
+  }
+
+  Future<void> handleLogIn(String email, String password) async {
     if (connectionType != 0) {
       try {
-        var response = await _authService.logInUser(userFormModel);
+        var response = await _authService.logInUser(email, password);
         if (response.statusCode == 200) {
           _getStorage.write(
             'user',
@@ -66,11 +57,11 @@ class AuthController extends NetworkManager {
           );
           currentUserData = getCurrentUser();
           if (isRememberMe) {
-            _getStorage.write('email', userFormModel.email);
+            _getStorage.write('email', email);
             rememberEmail = _getStorage.read('email');
           }
           update();
-          Get.offAllNamed(AuthScreen.routeName);
+          Get.offAllNamed(LogInScreen.routeName);
         } else if (response.statusCode == 404) {
           displayToastMessage('Invalid Credentials');
         } else {
@@ -86,10 +77,26 @@ class AuthController extends NetworkManager {
     }
   }
 
-  Future<void> handleSignUp() async {
+  Future<void> handleSignUp({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phoneNo,
+    required String dateOfBirth,
+    required String gender,
+    required String password,
+  }) async {
     if (connectionType != 0) {
       try {
-        var response = await _authService.signUpUser(userFormModel);
+        var response = await _authService.signUpUser(
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phoneNo: phoneNo,
+          dateOfBirth: dateOfBirth,
+          gender: gender,
+          password: password,
+        );
         if (response.statusCode == 200) {
           _getStorage.write(
             'user',
@@ -100,7 +107,7 @@ class AuthController extends NetworkManager {
           );
           currentUserData = getCurrentUser();
           update();
-          Get.offAllNamed(AuthScreen.routeName);
+          Get.offAllNamed(LogInScreen.routeName);
         } else if (response.statusCode == 404) {
           displayToastMessage('Invalid Credentials');
         } else {
@@ -132,6 +139,6 @@ class AuthController extends NetworkManager {
     currentUserData = _getStorage.read('user') ?? {};
     update();
     displayToastMessage('Logout');
-    Get.offAllNamed(AuthScreen.routeName);
+    // Get.offAllNamed(AuthScreen.routeName);
   }
 }

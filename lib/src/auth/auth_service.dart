@@ -1,29 +1,38 @@
 import 'dart:developer';
 
-import 'package:car_pooling_app/src/auth/models/user.dart';
 import 'package:car_pooling_app/utils/api.dart';
 import 'package:get/get.dart';
 
 class AuthService extends GetConnect {
-  Future<Response> logInUser(UserModel user) async {
+  Future<Response> logInUser(String email, String password) async {
     var loginFormData = FormData({
-      'login': user.email,
-      'password': user.password,
+      'login': email,
+      'password': password,
     });
-    log(user.email);
-    log(user.password);
+    log(email);
+    log(password);
     return post('$apiURL/Auth/login', loginFormData, contentType: 'form-data');
   }
 
-  Future<Response> signUpUser(UserModel user) async {
+  Future<Response> signUpUser({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phoneNo,
+    required String dateOfBirth,
+    required String gender,
+    required String password,
+  }) async {
     var signUpFormData = FormData({
-      'first_name': user.firstName,
-      'last_name': user.lastName,
-      'email': user.email,
-      'birth_year': user.dateOfBirth,
-      'gender': user.gender,
-      'password': user.password,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'phone_no': phoneNo,
+      'birth_year': dateOfBirth,
+      'gender': gender,
+      'password': password,
     });
+    log('$signUpFormData');
     return post('$apiURL/Auth/signup', signUpFormData, contentType: 'form-data');
   }
 }

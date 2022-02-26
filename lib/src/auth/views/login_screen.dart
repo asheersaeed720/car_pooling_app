@@ -1,13 +1,14 @@
 import 'package:async_button_builder/async_button_builder.dart';
 import 'package:car_pooling_app/src/auth/auth_controller.dart';
+import 'package:car_pooling_app/src/auth/header_widget.dart';
 import 'package:car_pooling_app/src/auth/views/forgot_password_screen.dart';
 import 'package:car_pooling_app/src/auth/views/signup_screen.dart';
 import 'package:car_pooling_app/utils/constants.dart';
-import 'package:car_pooling_app/utils/input_decoration.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../../../widgets/custom_text_field.dart';
 
 class LogInScreen extends StatelessWidget {
   static const String routeName = '/login';
@@ -18,157 +19,68 @@ class LogInScreen extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle(statusBarColor: Colors.black.withOpacity(0.5)),
-        child: ListView(
-          children: [
-            _buildHeaderView(context),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    _buildEmailTextField(context),
-                    const SizedBox(height: 10.0),
-                    _buildPasswordTextField(context),
-                    const SizedBox(height: 10.0),
-                    CustomAsyncBtn(
-                      btntxt: 'LOGIN',
-                      onPress: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-                          _authController.isLoading = true;
-                          await _authController.handleLogIn().catchError((_) {
-                            _authController.isLoading = false;
-                            _authController.update();
-                          });
+      body: ListView(
+        children: [
+          const HeaderWidget(),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextField(
+                    controller: _emailController,
+                    prefixIcon: Icons.email,
+                    isEmail: true,
+                    hintText: 'Email',
+                  ),
+                  const SizedBox(height: 10.0),
+                  CustomTextField(
+                    controller: _passwordController,
+                    prefixIcon: Icons.lock,
+                    hintText: 'Password',
+                    isPassword: true,
+                    isShowSuffixIcon: true,
+                  ),
+                  const SizedBox(height: 10.0),
+                  CustomAsyncBtn(
+                    btntxt: 'LOGIN',
+                    onPress: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+                        _authController.isLoading = true;
+                        await _authController
+                            .handleLogIn(_emailController.text, _passwordController.text)
+                            .catchError((_) {
                           _authController.isLoading = false;
                           _authController.update();
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 16.0),
-                    _buildExtraDataView(context),
-                    const SizedBox(height: 16.0),
-                    _buildDividerView(),
-                    const SizedBox(height: 24.0),
-                    _buildSocialMediaBtnView(context),
-                  ],
-                ),
+                        });
+                        _authController.isLoading = false;
+                        _authController.update();
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  _buildExtraDataView(context),
+                  const SizedBox(height: 16.0),
+                  _buildDividerView(),
+                  const SizedBox(height: 24.0),
+                  _buildSocialMediaBtnView(context),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderView(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height * 0.4,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/car_pooling.jpg"),
-              fit: BoxFit.fitHeight,
-            ),
           ),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.4,
-          decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.7),
-            // gradient: LinearGradient(
-            //   begin: FractionalOffset.topCenter,
-            //   end: FractionalOffset.bottomCenter,
-            //   colors: [
-            //     primaryColor.withOpacity(0.4),
-            //     primaryColor,
-            //   ],
-            //   stops: const [0.0, 1.0],
-            // ),
-          ),
-          // child: Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-          //   children: [
-          //     Image.asset(
-          //       'assets/images/dummy_logo.png',
-          //       height: MediaQuery.of(context).size.height * 0.2,
-          //     ),
-          //   ],
-          // ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildEmailTextField(BuildContext context) {
-    if (_authController.rememberEmail.isNotEmpty) {
-      _authController.userFormModel.email = _authController.rememberEmail;
-    }
-    return TextFormField(
-      initialValue: _authController.userFormModel.email,
-      onChanged: (value) {
-        _authController.userFormModel.email = value;
-      },
-      validator: (value) {
-        bool isValidEmail =
-            RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch('$value');
-        if (value!.isEmpty) {
-          return 'Required';
-        } else if (!isValidEmail) {
-          return 'Invalid Email';
-        }
-        return null;
-      },
-      keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      decoration: buildTextFieldInputDecoration(
-        context,
-        preffixIcon: Icons.email_outlined,
-        hintTxt: 'Email',
-      ),
-    );
-  }
-
-  Widget _buildPasswordTextField(BuildContext context) {
-    return TextFormField(
-      onChanged: (value) {
-        _authController.userFormModel.password = value;
-      },
-      obscureText: _authController.obscureText,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Required';
-        } /*else if (_authController.userFormModel.password.length < 6) {
-          return 'Too short';
-        }*/
-        return null;
-      },
-      keyboardType: TextInputType.visiblePassword,
-      decoration: buildPasswordInputDecoration(
-        context,
-        suffixIcon: GestureDetector(
-          onTap: () {
-            _authController.obscureText = !_authController.obscureText;
-          },
-          child: Icon(
-            _authController.obscureText ? Icons.visibility : Icons.visibility_off,
-          ),
-        ),
-        hintTxt: 'Password',
-        preffixIcon: Icons.lock_open_outlined,
+        ],
       ),
     );
   }

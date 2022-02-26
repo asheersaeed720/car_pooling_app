@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:car_pooling_app/src/auth/auth_controller.dart';
+import 'package:car_pooling_app/src/auth/header_widget.dart';
 import 'package:car_pooling_app/utils/constants.dart';
-import 'package:car_pooling_app/utils/input_decoration.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
+import 'package:car_pooling_app/widgets/custom_text_field.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -20,224 +18,144 @@ class SignUpScreen extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _dateOfBirthController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle(statusBarColor: Colors.black.withOpacity(0.5)),
-        child: ListView(
-          children: [
-            _buildHeaderView(context),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    _buildFirstNameTextField(context),
-                    const SizedBox(height: 10.0),
-                    _buildLastNameTextField(context),
-                    const SizedBox(height: 10.0),
-                    _buildEmailTextField(context),
-                    const SizedBox(height: 10.0),
-                    _buildPhoneNoFieldView(context),
-                    GenderSelector(),
-                    const SizedBox(height: 10.0),
-                    _buildDateOfBirthView(context),
-                    const SizedBox(height: 10.0),
-                    _buildPasswordTextField(context),
-                    const SizedBox(height: 10.0),
-                    CustomAsyncBtn(
-                      btntxt: 'SIGN UP NOW',
-                      onPress: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-                          _authController.isLoading = true;
-                          await _authController.handleSignUp().catchError((_) {
-                            _authController.isLoading = false;
-                            _authController.update();
-                          });
+      body: ListView(
+        children: [
+          const HeaderWidget(isSignUpScreen: true),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextField(
+                    controller: _firstNameController,
+                    prefixIcon: Icons.person,
+                    hintText: 'First name',
+                  ),
+                  const SizedBox(height: 10.0),
+                  CustomTextField(
+                    controller: _lastNameController,
+                    prefixIcon: Icons.person,
+                    hintText: 'Last name',
+                  ),
+                  const SizedBox(height: 10.0),
+                  CustomTextField(
+                    controller: _emailController,
+                    prefixIcon: Icons.email,
+                    hintText: 'Email',
+                    isEmail: true,
+                  ),
+                  const SizedBox(height: 10.0),
+                  _buildPhoneNoFieldView(context),
+                  GenderSelector(_genderController.text),
+                  const SizedBox(height: 10.0),
+                  _buildDateOfBirthView(context),
+                  const SizedBox(height: 10.0),
+                  CustomTextField(
+                    controller: _passwordController,
+                    prefixIcon: Icons.lock,
+                    hintText: 'Password',
+                    isPassword: true,
+                    isShowSuffixIcon: true,
+                  ),
+                  const SizedBox(height: 10.0),
+                  CustomAsyncBtn(
+                    btntxt: 'SIGN UP NOW',
+                    onPress: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+                        _authController.isLoading = true;
+                        await _authController
+                            .handleSignUp(
+                          firstName: _firstNameController.text,
+                          lastName: _lastNameController.text,
+                          email: _emailController.text,
+                          phoneNo: _phoneNoController.text,
+                          dateOfBirth: _genderController.text,
+                          gender: _dateOfBirthController.text,
+                          password: _passwordController.text,
+                        )
+                            .catchError((_) {
                           _authController.isLoading = false;
                           _authController.update();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderView(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height * 0.4,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/car_pooling.jpg"),
-              fit: BoxFit.fitHeight,
-            ),
-          ),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.4,
-          decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.7),
-            // gradient: LinearGradient(
-            //   begin: FractionalOffset.topCenter,
-            //   end: FractionalOffset.bottomCenter,
-            //   colors: [
-            //     primaryColor.withOpacity(0.4),
-            //     primaryColor,
-            //   ],
-            //   stops: const [0.0, 1.0],
-            // ),
-          ),
-          // child: Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-          //   children: [
-          //     Image.asset(
-          //       'assets/images/dummy_logo.png',
-          //       height: MediaQuery.of(context).size.height * 0.2,
-          //     ),
-          //   ],
-          // ),
-        ),
-        Positioned(
-          top: 6.0,
-          left: 8.0,
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
+                        });
+                        _authController.isLoading = false;
+                        _authController.update();
+                      }
+                    },
                   ),
-                ),
+                ],
               ),
-              const SizedBox(width: 6.0),
-              Text(
-                'SIGN UP',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFirstNameTextField(BuildContext context) {
-    return TextFormField(
-      autofocus: true,
-      onChanged: (value) {
-        _authController.userFormModel.firstName =
-            value.replaceAll(RegExp(r"\s+\b|\b\s"), " ").trim();
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Required';
-        }
-        return null;
-      },
-      keyboardType: TextInputType.text,
-      decoration: buildTextFieldInputDecoration(
-        context,
-        preffixIcon: Icons.person_outline_outlined,
-        hintTxt: 'First Name',
-      ),
-    );
-  }
-
-  Widget _buildLastNameTextField(BuildContext context) {
-    return TextFormField(
-      autofocus: true,
-      onChanged: (value) {
-        _authController.userFormModel.lastName =
-            value.replaceAll(RegExp(r"\s+\b|\b\s"), " ").trim();
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Required';
-        }
-        return null;
-      },
-      keyboardType: TextInputType.text,
-      decoration: buildTextFieldInputDecoration(
-        context,
-        preffixIcon: Icons.person_outline_outlined,
-        hintTxt: 'Last Name',
-      ),
-    );
-  }
-
-  Widget _buildEmailTextField(BuildContext context) {
-    if (_authController.rememberEmail.isNotEmpty) {
-      _authController.userFormModel.email = _authController.rememberEmail;
-    }
-    return TextFormField(
-      initialValue: _authController.userFormModel.email,
-      onChanged: (value) {
-        _authController.userFormModel.email = value;
-      },
-      validator: (value) {
-        bool isValidEmail =
-            RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch('$value');
-        if (value!.isEmpty) {
-          return 'Required';
-        } else if (!isValidEmail) {
-          return 'Invalid Email';
-        }
-        return null;
-      },
-      keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      decoration: buildTextFieldInputDecoration(
-        context,
-        preffixIcon: Icons.email_outlined,
-        hintTxt: 'Email',
+        ],
       ),
     );
   }
 
   Widget _buildPhoneNoFieldView(BuildContext context) {
     return IntlPhoneField(
-      decoration: buildTextFieldInputDecoration(context, hintTxt: 'Phone No'),
-      initialCountryCode: 'PK',
-      onChanged: (phone) {
-        log(phone.completeNumber);
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(10),
+        hintText: 'Phone No',
+        hintStyle: const TextStyle(fontSize: 14),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Required Field';
+        }
+        return null;
       },
+      controller: _phoneNoController,
+      initialCountryCode: 'PK',
+      // onChanged: (phone) {
+      //   log(phone.completeNumber);
+      // },
     );
   }
 
   Widget _buildDateOfBirthView(BuildContext context) {
     return DateTimeField(
       format: DateFormat.yMMMEd(),
-      decoration: buildTextFieldInputDecoration(
-        context,
-        preffixIcon: Icons.date_range,
-        hintTxt: 'Date of birth',
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.date_range),
+        contentPadding: const EdgeInsets.all(10),
+        hintText: 'Date of Birth',
+        hintStyle: const TextStyle(fontSize: 14),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+        ),
       ),
-      onChanged: (value) {
-        _authController.userFormModel.dateOfBirth = '$value';
+      validator: (value) {
+        if (value == null) {
+          return 'Required Field';
+        }
+        return null;
       },
+      controller: _dateOfBirthController,
+      // onChanged: (value) {
+      //   userFormModel.dateOfBirth?.text = '$value';
+      // },
       onShowPicker: (context, currentValue) {
         return showDatePicker(
           context: context,
@@ -248,41 +166,12 @@ class SignUpScreen extends StatelessWidget {
       },
     );
   }
-
-  Widget _buildPasswordTextField(BuildContext context) {
-    return TextFormField(
-      onChanged: (value) {
-        _authController.userFormModel.password = value;
-      },
-      obscureText: _authController.obscureText,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Required';
-        } else if (_authController.userFormModel.password.length < 6) {
-          return 'Too short';
-        }
-        return null;
-      },
-      keyboardType: TextInputType.visiblePassword,
-      decoration: buildPasswordInputDecoration(
-        context,
-        suffixIcon: GestureDetector(
-          onTap: () {
-            _authController.obscureText = !_authController.obscureText;
-          },
-          child: Icon(
-            _authController.obscureText ? Icons.visibility : Icons.visibility_off,
-          ),
-        ),
-        hintTxt: 'Password',
-        preffixIcon: Icons.lock_open_outlined,
-      ),
-    );
-  }
 }
 
+// ignore: must_be_immutable
 class GenderSelector extends StatelessWidget {
-  GenderSelector({Key? key}) : super(key: key);
+  GenderSelector(this.whichGender, {Key? key}) : super(key: key);
+  String whichGender;
 
   final _authController = Get.find<AuthController>();
 
@@ -300,7 +189,6 @@ class GenderSelector extends StatelessWidget {
           height: 80.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            // shrinkWrap: true,
             itemCount: _authController.gendersList.length,
             itemBuilder: (context, index) {
               return GetBuilder<AuthController>(
@@ -310,6 +198,7 @@ class GenderSelector extends StatelessWidget {
                     for (var gender in _authController.gendersList) {
                       gender.isSelected = false;
                     }
+                    whichGender = _authController.gendersList[index].name;
                     _authController.gendersList[index].isSelected = true;
                     _authController.update();
                   },
