@@ -6,6 +6,7 @@ class CustomAsyncBtn extends StatelessWidget {
     Key? key,
     this.icon,
     required this.btntxt,
+    this.width = double.infinity,
     this.height = 48.0,
     this.btnColor,
     this.borderRadius = 6.0,
@@ -15,6 +16,7 @@ class CustomAsyncBtn extends StatelessWidget {
 
   final Icon? icon;
   final String btntxt;
+  final double width;
   final double height;
   final Color? btnColor;
   final double borderRadius;
@@ -50,7 +52,7 @@ class CustomAsyncBtn extends StatelessWidget {
       disabled: isDisabled,
       builder: (context, child, callback, _) {
         return SizedBox(
-          width: double.infinity,
+          width: width,
           height: height,
           child: ElevatedButton(
             child: child,

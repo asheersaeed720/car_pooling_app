@@ -4,13 +4,11 @@ const primaryColor = Color(0xFF082d4a);
 
 //? Light Theme
 const Color textColor1 = Color(0XFFA7BCC7);
-// const Color textColor2 = Color(0XFF9BB3C0);
-
-//? Dart Theme
-// Todo: Add Colors soon...
+const Color textFieldColor = Color.fromARGB(255, 238, 236, 237);
 
 //? TextStyle
 TextStyle kTitleStyle = const TextStyle(
-  color: Color(0xFF151a56),
+  color: primaryColor,
   fontWeight: FontWeight.bold,
+  fontSize: 18.0,
 );

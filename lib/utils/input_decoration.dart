@@ -10,6 +10,10 @@ InputDecoration buildTextFieldInputDecoration(
     contentPadding: const EdgeInsets.all(10),
     hintText: hintTxt,
     hintStyle: const TextStyle(fontSize: 14),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+    ),
   );
 }
 
@@ -25,5 +29,9 @@ InputDecoration buildPasswordInputDecoration(
     contentPadding: const EdgeInsets.all(10),
     hintText: hintTxt,
     hintStyle: const TextStyle(fontSize: 14),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+    ),
   );
 }

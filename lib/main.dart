@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'Car Pooling',
         debugShowCheckedModeBanner: false,
         theme: lightThemeData,
-        darkTheme: darkThemeData,
+        // darkTheme: darkThemeData,
         initialBinding: MainBinding(),
         initialRoute: AuthScreen.routeName,
         getPages: routes,
