@@ -1,6 +1,6 @@
 import 'package:car_pooling_app/src/auth/views/login_screen.dart';
-import 'package:car_pooling_app/src/home/views/home_screen.dart';
 import 'package:car_pooling_app/src/main_binding.dart';
+import 'package:car_pooling_app/src/tab_screen.dart';
 import 'package:car_pooling_app/utils/app_theme.dart';
 import 'package:car_pooling_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // darkTheme: darkThemeData,
         initialBinding: MainBinding(),
         initialRoute:
-            GetStorage().read('user') == null ? LogInScreen.routeName : HomeScreen.routeName,
+            GetStorage().read('user') == null ? LogInScreen.routeName : TabScreen.routeName,
         // initialRoute: AuthScreen.routeName,
         getPages: routes,
       );

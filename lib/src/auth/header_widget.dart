@@ -24,15 +24,6 @@ class HeaderWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 3.0,
           decoration: BoxDecoration(
             color: primaryColor.withOpacity(0.7),
-            // gradient: LinearGradient(
-            //   begin: FractionalOffset.topCenter,
-            //   end: FractionalOffset.bottomCenter,
-            //   colors: [
-            //     primaryColor.withOpacity(0.4),
-            //     primaryColor,
-            //   ],
-            //   stops: const [0.0, 1.0],
-            // ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

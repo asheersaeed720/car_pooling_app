@@ -89,9 +89,11 @@ class CustomTextField extends StatelessWidget {
         },
         autofocus: false,
         obscureText: isPassword ? authController.obscureText : false,
-        inputFormatters: inputType == TextInputType.phone
-            ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9+]'))]
-            : null,
+        inputFormatters: isEmail
+            ? [
+                FilteringTextInputFormatter.deny(RegExp(' ')),
+              ]
+            : [],
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 22.0),
           border: OutlineInputBorder(

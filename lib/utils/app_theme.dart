@@ -5,7 +5,16 @@ final lightThemeData = ThemeData(
   brightness: Brightness.light,
   primaryColor: primaryColor,
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: const AppBarTheme(backgroundColor: primaryColor),
+  appBarTheme: const AppBarTheme(
+    titleTextStyle: TextStyle(
+      color: Colors.black87,
+      fontSize: 16.0,
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.bold,
+    ),
+    elevation: 0,
+    backgroundColor: Colors.white,
+  ),
   inputDecorationTheme: const InputDecorationTheme(fillColor: textFieldColor, filled: true),
   errorColor: Colors.red[800],
   visualDensity: VisualDensity.adaptivePlatformDensity,
