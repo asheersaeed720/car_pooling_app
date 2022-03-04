@@ -12,12 +12,12 @@ class TabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<Widget> _widgetOptions = <Widget>[
+    List<Widget> _widgetOptions = <Widget>[
       SearchScreen(),
-      Text('Index 2: School'),
-      Text('Index 3: Settings'),
-      ChatScreen(),
-      Text('Index 3: Settings'),
+      const Text('Index 2: School'),
+      const Text('Index 3: Settings'),
+      const ChatScreen(),
+      const Text('Index 3: Settings'),
     ];
 
     return DefaultTabController(
@@ -25,12 +25,7 @@ class TabScreen extends StatelessWidget {
       child: GetBuilder<TabController>(
         init: TabController(),
         builder: (tabController) => Scaffold(
-          // appBar: AppBar(
-          //   title: const Text('BottomNavigationBar Sample'),
-          // ),
-          body: Center(
-            child: _widgetOptions.elementAt(tabController.selectedIndex),
-          ),
+          body: _widgetOptions.elementAt(tabController.selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             items: const <BottomNavigationBarItem>[

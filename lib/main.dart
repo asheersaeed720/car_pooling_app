@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
         initialBinding: MainBinding(),
         initialRoute:
             GetStorage().read('user') == null ? LogInScreen.routeName : TabScreen.routeName,
-        // initialRoute: AuthScreen.routeName,
         getPages: routes,
       );
 }
