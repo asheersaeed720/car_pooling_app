@@ -5,8 +5,6 @@ import 'package:car_pooling_app/src/chat/views/chat_detail_screen.dart';
 import 'package:car_pooling_app/src/tab_screen.dart';
 import 'package:get/get.dart';
 
-import '../src/home/views/home_detail_screen.dart';
-
 final List<GetPage<dynamic>> routes = [
   GetPage(
     name: LogInScreen.routeName,
@@ -23,10 +21,6 @@ final List<GetPage<dynamic>> routes = [
   GetPage(
     name: TabScreen.routeName,
     page: () => const TabScreen(),
-  ),
-  GetPage(
-    name: HomeDetailScreen.routeName,
-    page: () => const HomeDetailScreen(),
   ),
   GetPage(
     name: ChatDetailScreen.routeName,

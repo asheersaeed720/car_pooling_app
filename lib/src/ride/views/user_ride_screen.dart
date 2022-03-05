@@ -1,11 +1,11 @@
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-class ScheduleTab extends StatefulWidget {
-  const ScheduleTab({Key? key}) : super(key: key);
+class UserRiderScreen extends StatefulWidget {
+  const UserRiderScreen({Key? key}) : super(key: key);
 
   @override
-  State<ScheduleTab> createState() => _ScheduleTabState();
+  State<UserRiderScreen> createState() => _UserRiderScreenState();
 }
 
 enum FilterStatus { upcoming, complete, cancel }
@@ -61,7 +61,7 @@ List<Map> schedules = [
   },
 ];
 
-class _ScheduleTabState extends State<ScheduleTab> {
+class _UserRiderScreenState extends State<UserRiderScreen> {
   FilterStatus status = FilterStatus.upcoming;
   Alignment _alignment = Alignment.centerLeft;
 
@@ -247,7 +247,7 @@ class DateTimeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       width: double.infinity,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

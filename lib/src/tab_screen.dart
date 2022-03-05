@@ -1,3 +1,5 @@
+import 'package:car_pooling_app/src/ride/views/add_ride_screen.dart';
+import 'package:car_pooling_app/src/ride/views/user_ride_screen.dart';
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,8 +16,8 @@ class TabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
       SearchScreen(),
-      const Text('Index 2: School'),
-      const Text('Index 3: Settings'),
+      const AddRideScreen(),
+      const UserRiderScreen(),
       const ChatScreen(),
       const Text('Index 3: Settings'),
     ];
