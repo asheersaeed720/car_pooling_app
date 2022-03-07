@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:car_pooling_app/src/auth/auth_service.dart';
 import 'package:car_pooling_app/src/auth/models/gender.dart';
-import 'package:car_pooling_app/src/auth/views/login_screen.dart';
 import 'package:car_pooling_app/src/network_manager.dart';
+import 'package:car_pooling_app/src/tab_screen.dart';
 import 'package:car_pooling_app/utils/custom_snack_bar.dart';
 import 'package:car_pooling_app/utils/display_toast_message.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class AuthController extends NetworkManager {
             rememberEmail = _getStorage.read('email');
           }
           update();
-          Get.offAllNamed(LogInScreen.routeName);
+          Get.offAllNamed(TabScreen.routeName);
         } else if (response.statusCode == 404) {
           displayToastMessage('Invalid Credentials');
         } else {
@@ -107,7 +107,7 @@ class AuthController extends NetworkManager {
           );
           currentUserData = getCurrentUser();
           update();
-          Get.offAllNamed(LogInScreen.routeName);
+          Get.offAllNamed(TabScreen.routeName);
         } else if (response.statusCode == 404) {
           displayToastMessage('Invalid Credentials');
         } else {

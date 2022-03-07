@@ -1,8 +1,10 @@
+import 'package:car_pooling_app/src/place_picker/google_place_picker_screen.dart';
 import 'package:car_pooling_app/src/search/search_history.dart';
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -42,7 +44,12 @@ class SearchScreen extends StatelessWidget {
     return ListView(
       children: [
         _buildSearchContainerView(context),
-        const SizedBox(height: 10.0),
+        const SizedBox(height: 24.0),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Text('Recent Search', style: kTitleStyle),
+        ),
+        const SizedBox(height: 6.0),
         SizedBox(
           height: MediaQuery.of(context).size.height / 2.8,
           child: ListView.separated(
@@ -84,7 +91,7 @@ class SearchScreen extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
-                spreadRadius: 5,
+                spreadRadius: 4,
                 blurRadius: 7,
                 offset: const Offset(0, 3),
               ),
@@ -92,29 +99,34 @@ class SearchScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 12.0, bottom: 12, left: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                child: Wrap(
-                  spacing: 10.0,
-                  children: [
-                    Icon(
-                      Icons.circle_outlined,
-                      color: Colors.grey.shade600,
-                    ),
-                    Text(
-                      'Leaving from',
-                      style: TextStyle(color: Colors.grey.shade700, fontSize: 16.0),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
+              InkWell(
+                onTap: () {
+                  Get.toNamed(GooglePlacePickerScreen.routeName);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(top: 12.0, bottom: 12, left: 16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Wrap(
+                    spacing: 10.0,
+                    children: [
+                      Icon(
+                        Icons.circle_outlined,
+                        color: Colors.grey.shade600,
+                      ),
+                      Text(
+                        'Leaving from',
+                        style: TextStyle(color: Colors.grey.shade700, fontSize: 16.0),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 6.0),
+              const SizedBox(height: 8.0),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(top: 12.0, bottom: 12, left: 16.0),
@@ -137,7 +149,7 @@ class SearchScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 6.0),
+              const SizedBox(height: 8.0),
               DateTimeField(
                 format: DateFormat.yMMMEd(),
                 decoration: const InputDecoration(hintText: 'Date'),
@@ -149,7 +161,7 @@ class SearchScreen extends StatelessWidget {
                   return DateTimeField.convert(time);
                 },
               ),
-              const SizedBox(height: 6.0),
+              const SizedBox(height: 8.0),
               CustomAsyncBtn(
                 btntxt: 'Search',
                 onPress: () {},

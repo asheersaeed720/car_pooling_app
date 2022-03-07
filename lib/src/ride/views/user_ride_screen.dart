@@ -1,3 +1,4 @@
+import 'package:car_pooling_app/src/ride/models/ride_model.dart';
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -8,83 +9,81 @@ class UserRiderScreen extends StatefulWidget {
   State<UserRiderScreen> createState() => _UserRiderScreenState();
 }
 
-enum FilterStatus { upcoming, complete, cancel }
+enum UserStatusFilter { ongoing, complete, cancel }
 
-List<Map> schedules = [
-  {
-    'img': 'assets/images/doctor01.jpeg',
-    'doctorName': 'Dr. Anastasya Syahid',
-    'doctorTitle': 'Dental Specialist',
-    'reservedDate': 'Monday, Aug 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.upcoming
-  },
-  {
-    'img': 'assets/images/doctor02.png',
-    'doctorName': 'Dr. Mauldya Imran',
-    'doctorTitle': 'Skin Specialist',
-    'reservedDate': 'Monday, Sep 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.upcoming
-  },
-  {
-    'img': 'assets/images/doctor03.jpeg',
-    'doctorName': 'Dr. Rihanna Garland',
-    'doctorTitle': 'General Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.upcoming
-  },
-  {
-    'img': 'assets/images/doctor04.jpeg',
-    'doctorName': 'Dr. John Doe',
-    'doctorTitle': 'Something Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.complete
-  },
-  {
-    'img': 'assets/images/doctor05.jpeg',
-    'doctorName': 'Dr. Sam Smithh',
-    'doctorTitle': 'Other Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.cancel
-  },
-  {
-    'img': 'assets/images/doctor05.jpeg',
-    'doctorName': 'Dr. Sam Smithh',
-    'doctorTitle': 'Other Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.cancel
-  },
+List<RideModel> _userRideDataList = [
+  RideModel(
+    pickUpTime: '16:40',
+    dropOffTime: '19:10',
+    pickUpCity: 'Karachi',
+    dropOffCity: 'Islamabad',
+    riderName: 'Hassan Jahangir',
+    profilePic: 'assets/images/no_img_available.jpg',
+    rating: 4.0,
+    price: '700',
+    availableSlots: '2',
+    status: UserStatusFilter.ongoing,
+  ),
+  RideModel(
+    pickUpTime: '23:00',
+    dropOffTime: '19:10',
+    pickUpCity: 'Hyderabad',
+    dropOffCity: 'Lahore',
+    riderName: 'Aslam Babu',
+    profilePic: 'assets/images/no_img_available.jpg',
+    rating: 3.0,
+    price: '600',
+    availableSlots: '2',
+    status: UserStatusFilter.ongoing,
+  ),
+  RideModel(
+    pickUpTime: '15:00',
+    dropOffTime: '21:30',
+    pickUpCity: 'Karachi',
+    dropOffCity: 'Abbottabad',
+    riderName: 'Jameel Khan',
+    profilePic: 'assets/images/no_img_available.jpg',
+    rating: 4.5,
+    price: '1200',
+    availableSlots: '1',
+    status: UserStatusFilter.complete,
+  ),
+  RideModel(
+    pickUpTime: '13:50',
+    dropOffTime: '17:10',
+    pickUpCity: 'Rawalpindi',
+    dropOffCity: 'Islamabad',
+    riderName: 'Zain Chugtai',
+    profilePic: 'assets/images/person.jpeg',
+    rating: 5.0,
+    price: '500',
+    availableSlots: '1',
+    status: UserStatusFilter.cancel,
+  ),
 ];
 
 class _UserRiderScreenState extends State<UserRiderScreen> {
-  FilterStatus status = FilterStatus.upcoming;
+  UserStatusFilter status = UserStatusFilter.ongoing;
   Alignment _alignment = Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
-    List<Map> filteredSchedules = schedules.where((var schedule) {
-      return schedule['status'] == status;
-    }).toList();
+    // List<Map> filteredSchedules = schedules.where((var schedule) {
+    //   return schedule['status'] == status;
+    // }).toList();
+
+    List<RideModel> filteredRides =
+        _userRideDataList.where((var ride) => ride.status == status).toList();
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('User Rides'),
+      ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 30, top: 30, right: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Schedule',
-              textAlign: TextAlign.center,
-              style: kTitleStyle,
-            ),
-            SizedBox(
-              height: 20,
-            ),
             Stack(
               children: [
                 Container(
@@ -96,27 +95,26 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      for (FilterStatus filterStatus in FilterStatus.values)
+                      for (UserStatusFilter filterStatus in UserStatusFilter.values)
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                if (filterStatus == FilterStatus.upcoming) {
-                                  status = FilterStatus.upcoming;
+                                if (filterStatus == UserStatusFilter.ongoing) {
+                                  status = UserStatusFilter.ongoing;
                                   _alignment = Alignment.centerLeft;
-                                } else if (filterStatus == FilterStatus.complete) {
-                                  status = FilterStatus.complete;
+                                } else if (filterStatus == UserStatusFilter.complete) {
+                                  status = UserStatusFilter.complete;
                                   _alignment = Alignment.center;
-                                } else if (filterStatus == FilterStatus.cancel) {
-                                  status = FilterStatus.cancel;
+                                } else if (filterStatus == UserStatusFilter.cancel) {
+                                  status = UserStatusFilter.cancel;
                                   _alignment = Alignment.centerRight;
                                 }
                               });
                             },
                             child: Center(
                               child: Text(
-                                filterStatus.name,
-                                // style: kFilterStyle,
+                                filterStatus.name.capitalize(),
                               ),
                             ),
                           ),
@@ -125,7 +123,7 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                   ),
                 ),
                 AnimatedAlign(
-                  duration: Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 200),
                   alignment: _alignment,
                   child: Container(
                     width: 100,
@@ -137,7 +135,7 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                     child: Center(
                       child: Text(
                         status.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -147,44 +145,44 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: filteredSchedules.length,
+                itemCount: filteredRides.length,
                 itemBuilder: (context, index) {
-                  var _schedule = filteredSchedules[index];
-                  bool isLastElement = filteredSchedules.length + 1 == index;
+                  var _ride = filteredRides[index];
+                  bool isLastElement = filteredRides.length + 1 == index;
                   return Card(
-                    margin: !isLastElement ? EdgeInsets.only(bottom: 20) : EdgeInsets.zero,
+                    margin: !isLastElement ? const EdgeInsets.only(bottom: 20) : EdgeInsets.zero,
                     child: Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundImage: AssetImage(_schedule['img']),
+                                backgroundImage: AssetImage(_ride.profilePic),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _schedule['doctorName'],
-                                    style: TextStyle(
+                                    _ride.riderName,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
-                                  Text(
-                                    _schedule['doctorTitle'],
+                                  const Text(
+                                    '_schedule',
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
@@ -194,11 +192,11 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
-                          DateTimeCard(),
-                          SizedBox(
+                          const DateTimeCard(),
+                          const SizedBox(
                             height: 15,
                           ),
                           Row(
@@ -206,16 +204,16 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                             children: [
                               Expanded(
                                 child: OutlinedButton(
-                                  child: Text('Cancel'),
+                                  child: const Text('Cancel'),
                                   onPressed: () {},
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 20,
                               ),
                               Expanded(
                                 child: ElevatedButton(
-                                  child: Text('Reschedule'),
+                                  child: const Text('Reschedule'),
                                   onPressed: () => {},
                                 ),
                               )

@@ -1,3 +1,4 @@
+import 'package:car_pooling_app/src/account/account_screen.dart';
 import 'package:car_pooling_app/src/ride/views/add_ride_screen.dart';
 import 'package:car_pooling_app/src/ride/views/user_ride_screen.dart';
 import 'package:car_pooling_app/utils/constants.dart';
@@ -19,7 +20,7 @@ class TabScreen extends StatelessWidget {
       const AddRideScreen(),
       const UserRiderScreen(),
       const ChatScreen(),
-      const Text('Index 3: Settings'),
+      AccountScreen(),
     ];
 
     return DefaultTabController(

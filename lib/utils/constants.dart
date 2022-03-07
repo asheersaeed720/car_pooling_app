@@ -12,3 +12,9 @@ TextStyle kTitleStyle = const TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}

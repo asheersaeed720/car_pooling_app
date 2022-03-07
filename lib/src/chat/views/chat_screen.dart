@@ -11,7 +11,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat'),
+        title: const Text('My Chat'),
       ),
       body: ListView(
         children: [
@@ -29,6 +29,7 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             title: const Text('Zain'),
+            subtitle: const Text('Last message will be show here..'),
           ),
           const Divider(
             indent: 10.0,
@@ -45,6 +46,7 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             title: const Text('Hassan'),
+            subtitle: const Text('Last message will be show here..'),
           ),
           const Divider(
             indent: 10.0,
@@ -61,6 +63,7 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             title: const Text('Ash'),
+            subtitle: const Text('Last message will be show here..'),
           ),
         ],
       ),
