@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'chat/views/chat_screen.dart';
-import 'search/search_screen.dart';
+import 'search/views/search_screen.dart';
 
 class TabScreen extends StatelessWidget {
   static const String routeName = '/tab';

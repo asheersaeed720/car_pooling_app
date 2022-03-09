@@ -1,4 +1,6 @@
 import 'package:car_pooling_app/src/auth/auth_controller.dart';
+import 'package:car_pooling_app/utils/constants.dart';
+import 'package:car_pooling_app/widgets/custom_async_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -82,7 +84,7 @@ class AccountScreen extends StatelessWidget {
         ListTile(
           title: Text(
             'Support',
-            style: Theme.of(context).textTheme.bodyText1,
+            style: kTitleStyle,
           ),
         ),
         // const SizedBox(height: 10.0),
@@ -121,7 +123,7 @@ class AccountScreen extends StatelessWidget {
         ListTile(
           title: Text(
             'Preferences',
-            style: Theme.of(context).textTheme.bodyText1,
+            style: kTitleStyle,
           ),
         ),
         const SizedBox(height: 10.0),
@@ -182,8 +184,8 @@ class AccountScreen extends StatelessWidget {
       children: [
         ListTile(
           title: Text(
-            'Travel App',
-            style: Theme.of(context).textTheme.bodyText1,
+            'Car Pooling App',
+            style: kTitleStyle,
           ),
         ),
         const SizedBox(height: 10.0),
@@ -218,6 +220,13 @@ class AccountScreen extends StatelessWidget {
           ),
           trailing: const Icon(Icons.arrow_forward_ios_rounded),
         ),
+        const Divider(thickness: 1.0, height: 20.0),
+        CustomAsyncBtn(
+          btntxt: 'Logout',
+          onPress: () {
+            _authController.logoutUser();
+          },
+        )
       ],
     );
   }

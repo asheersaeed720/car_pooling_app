@@ -27,12 +27,18 @@ class AuthService extends GetConnect {
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
-      'phone_no': phoneNo,
+      'phone_number': phoneNo,
       'birth_year': dateOfBirth,
       'gender': gender,
       'password': password,
     });
-    log('$signUpFormData');
+    log('firstName: $firstName');
+    log('lastName: $lastName');
+    log('email: $email');
+    log('phoneNo: $phoneNo');
+    log('dateOfBirth: $dateOfBirth');
+    log('gender: $gender');
+    log('password: $password');
     return post('$apiURL/Auth/signup', signUpFormData, contentType: 'form-data');
   }
 }

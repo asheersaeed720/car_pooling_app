@@ -2,7 +2,8 @@ import 'package:car_pooling_app/src/auth/views/forgot_password_screen.dart';
 import 'package:car_pooling_app/src/auth/views/login_screen.dart';
 import 'package:car_pooling_app/src/auth/views/signup_screen.dart';
 import 'package:car_pooling_app/src/chat/views/chat_detail_screen.dart';
-import 'package:car_pooling_app/src/place_picker/google_place_picker_screen.dart';
+import 'package:car_pooling_app/src/search/views/search_location_screen.dart';
+import 'package:car_pooling_app/src/search/views/search_result_screen.dart';
 import 'package:car_pooling_app/src/tab_screen.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +29,11 @@ final List<GetPage<dynamic>> routes = [
     page: () => const ChatDetailScreen(),
   ),
   GetPage(
-    name: GooglePlacePickerScreen.routeName,
-    page: () => const GooglePlacePickerScreen(),
+    name: SearchLocationScreen.routeName,
+    page: () => const SearchLocationScreen(),
+  ),
+  GetPage(
+    name: SearchResultScreen.routeName,
+    page: () => const SearchResultScreen(),
   ),
 ];

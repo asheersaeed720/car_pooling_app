@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:car_pooling_app/src/auth/auth_service.dart';
 import 'package:car_pooling_app/src/auth/models/gender.dart';
+import 'package:car_pooling_app/src/auth/views/login_screen.dart';
 import 'package:car_pooling_app/src/network_manager.dart';
 import 'package:car_pooling_app/src/tab_screen.dart';
 import 'package:car_pooling_app/utils/custom_snack_bar.dart';
@@ -16,9 +17,9 @@ class AuthController extends NetworkManager {
   final GetStorage _getStorage = GetStorage();
 
   List<GenderModel> gendersList = [
-    GenderModel("Male", Icons.male, true),
-    GenderModel("Female", Icons.female, false),
-    GenderModel("Others", Icons.transgender, false),
+    GenderModel("male", Icons.male, true),
+    GenderModel("female", Icons.female, false),
+    GenderModel("others", Icons.transgender, false),
   ];
 
   Map currentUserData = {};
@@ -139,6 +140,6 @@ class AuthController extends NetworkManager {
     currentUserData = _getStorage.read('user') ?? {};
     update();
     displayToastMessage('Logout');
-    // Get.offAllNamed(AuthScreen.routeName);
+    Get.offAllNamed(LogInScreen.routeName);
   }
 }

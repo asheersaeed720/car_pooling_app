@@ -40,13 +40,14 @@ dependencies:
   dropdown_search: ^2.0.1
   intl_phone_field: ^3.0.1
   connectivity_plus: ^2.2.1
+  flutter_typeahead: ^3.2.4
   flutter_rating_bar: ^4.0.0
   google_maps_flutter: ^2.1.1
   cached_network_image: ^3.2.0
   font_awesome_flutter: ^9.2.0
   async_button_builder: ^2.1.4
   datetime_picker_formfield: ^2.0.0
-  google_maps_place_picker: ^2.1.0-nullsafety.3
+  # google_maps_place_picker: ^2.1.0-nullsafety.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

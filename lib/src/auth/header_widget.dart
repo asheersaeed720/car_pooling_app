@@ -30,9 +30,9 @@ class HeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.asset(
-                'assets/images/dummy_logo.png',
-                width: 60.0,
-                height: 60.0,
+                'assets/images/logo.png',
+                width: 80.0,
+                height: 80.0,
               ),
             ],
           ),

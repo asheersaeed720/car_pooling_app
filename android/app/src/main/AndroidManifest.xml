@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.car_pooling_app">
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="Car Pooling" android:name="${applicationName}" android:icon="@mipmap/ic_launcher">
+	<application android:label="Soft Pooler" android:name="${applicationName}" android:icon="@drawable/ic_launcher">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDf44D8ld6rYQTHUFNIsxy_CGVWKBkM6_I" />
 		<activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
 			<!--

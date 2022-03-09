@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:car_pooling_app/src/auth/auth_controller.dart';
 import 'package:car_pooling_app/src/auth/header_widget.dart';
 import 'package:car_pooling_app/utils/constants.dart';
@@ -22,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNoController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController(text: 'male');
   final TextEditingController _dateOfBirthController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -86,8 +88,8 @@ class SignUpScreen extends StatelessWidget {
                           lastName: _lastNameController.text,
                           email: _emailController.text,
                           phoneNo: _phoneNoController.text,
-                          dateOfBirth: _genderController.text,
-                          gender: _dateOfBirthController.text,
+                          dateOfBirth: _dateOfBirthController.text,
+                          gender: _genderController.text,
                           password: _passwordController.text,
                         )
                             .catchError((_) {
@@ -201,6 +203,7 @@ class GenderSelector extends StatelessWidget {
                     whichGender = _authController.gendersList[index].name;
                     _authController.gendersList[index].isSelected = true;
                     _authController.update();
+                    log(whichGender);
                   },
                   child: Card(
                     color:
