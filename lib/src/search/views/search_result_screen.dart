@@ -1,3 +1,4 @@
+import 'package:car_pooling_app/src/search/filter_modal_bottom.dart';
 import 'package:car_pooling_app/src/search/models/user_ride_request.dart';
 import 'package:car_pooling_app/src/search/search_controller.dart';
 import 'package:car_pooling_app/utils/constants.dart';
@@ -16,19 +17,17 @@ class SearchResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final arg = Get.arguments as Map<String, dynamic>;
     return Scaffold(
-      backgroundColor: const Color(0xFFEEEDEF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEEEDEF),
         iconTheme: const IconThemeData(color: Colors.black87),
-        title: const Text('User Requests'),
-        actions: const [
+        title: const Text('Requests'),
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 14.0),
-            child: Icon(
-              Icons.filter_alt_outlined,
-              color: primaryColor,
+            padding: const EdgeInsets.only(right: 14.0),
+            child: IconButton(
+              onPressed: () => filterModalBottomSheet(context),
+              icon: const Icon(Icons.filter_alt_outlined),
             ),
-          ),
+          )
         ],
       ),
       body: Padding(
@@ -41,7 +40,6 @@ class SearchResultScreen extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<UserRideRequest> userRideRequestList = snapshot.data ?? [];
-                  // return Text(userRideRequestList[0].carId);
                   return ListView.separated(
                     itemBuilder: (context, i) {
                       return _buildUserRideRequestView(userRideRequestList[i]);
@@ -102,19 +100,31 @@ class SearchResultScreen extends StatelessWidget {
             ),
             trailing: const Icon(Icons.chat, color: primaryColor),
           ),
-          const ListTile(
-            leading: Text('16:00'),
-            title: Text('Karachi'),
-            trailing: Text('Rs. 470.00'),
+
+          IntrinsicHeight(
+            child: Column(
+              children: const [
+                ListTile(
+                  leading: Text('16:00'),
+                  title: Text('Karachi'),
+                  trailing: Text('Rs. 470.00'),
+                ),
+                VerticalDivider(
+                  color: Colors.black,
+                  thickness: 2,
+                ),
+                ListTile(
+                  leading: Text('16:00'),
+                  title: Text('Hyderabad'),
+                  trailing: Icon(Icons.arrow_forward_rounded),
+                ),
+              ],
+            ),
           ),
 
-          const ListTile(
-            leading: Text('16:00'),
-            title: Text('Hyderabad'),
-          ),
           // IntrinsicHeight(
           //   child: Row(
-          //     children:const [
+          //     children: const [
           //       Text('Hello'),
           //       VerticalDivider(
           //         color: Colors.black,
