@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:car_pooling_app/src/search/models/city.dart';
-import 'package:car_pooling_app/src/search/models/user_ride_request.dart';
+import 'package:car_pooling_app/src/rides/models/ride_model.dart';
+import 'package:car_pooling_app/src/search/models/city_model.dart';
 import 'package:car_pooling_app/src/search/search_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,13 +23,13 @@ class SearchController extends GetxController {
     getRequests();
   }
 
-  Future<List<UserRideRequest>> getRequests() async {
+  Future<List<RideRequest>> getRequests() async {
     try {
       var response = await _searchService.getRequests();
       log('${response.body}');
       if (response.statusCode == 200) {
         var responseJson = response.body;
-        return (responseJson as List).map((i) => UserRideRequest.fromJson(i)).toList();
+        return (responseJson as List).map((i) => RideRequest.fromJson(i)).toList();
       } else {
         throw ('Failed to load Requests');
       }

@@ -1,10 +1,10 @@
+import 'package:car_pooling_app/src/place_picker/google_place_picker_screen.dart';
 import 'package:car_pooling_app/src/search/search_controller.dart';
-import 'package:car_pooling_app/src/search/search_history.dart';
-import 'package:car_pooling_app/src/search/views/search_location_screen.dart';
 import 'package:car_pooling_app/src/search/views/search_result_screen.dart';
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:car_pooling_app/utils/display_toast_message.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
+import 'package:car_pooling_app/widgets/custom_text_field.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,33 +16,6 @@ class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
 
   final _searchController = Get.put(SearchController());
-
-  final List<SearchHistory> _searchHistoryList = [
-    SearchHistory(
-      leavingPlace: 'Karachi',
-      goingToPlace: 'Hydarabad',
-      date: '${DateTime.now()}',
-      passengers: '2',
-    ),
-    SearchHistory(
-      leavingPlace: 'Lahore',
-      goingToPlace: 'Hydarabad',
-      date: '${DateTime.now()}',
-      passengers: '1',
-    ),
-    SearchHistory(
-      leavingPlace: 'Karachi',
-      goingToPlace: 'Islamabad',
-      date: '${DateTime.now()}',
-      passengers: '2',
-    ),
-    SearchHistory(
-      leavingPlace: 'Karachi',
-      goingToPlace: 'Islamabad',
-      date: '${DateTime.now()}',
-      passengers: '2',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +32,9 @@ class SearchScreen extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height / 2.8,
             child: ListView.separated(
-              itemBuilder: (context, i) => _buildRecentSearchHistoryView(_searchHistoryList[i]),
+              itemBuilder: (context, i) => _buildRecentSearchHistoryView(),
               separatorBuilder: (context, i) => const Divider(),
-              itemCount: _searchHistoryList.length,
+              itemCount: 5,
             ),
           )
         ],
@@ -106,68 +79,50 @@ class SearchScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              InkWell(
-                onTap: () => Get.toNamed(SearchLocationScreen.routeName),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(top: 12.0, bottom: 12, left: 16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  child: Wrap(
-                    spacing: 10.0,
-                    children: [
-                      Icon(
-                        Icons.circle_outlined,
-                        color: Colors.grey.shade600,
-                      ),
-                      Text(
-                        _searchController.pickUpCityName.text.isEmpty
-                            ? 'Leaving from'
-                            : _searchController.pickUpCityName.text,
-                        style: TextStyle(
-                            color: _searchController.pickUpCityName.text.isEmpty
-                                ? Colors.grey.shade700
-                                : Colors.black87,
-                            fontSize: 16.0),
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
-                ),
+              // InkWell(
+              //   onTap: () => Get.toNamed(GooglePlacePickerScreen.routeName),
+              //   child: Container(
+              //     width: double.infinity,
+              //     padding: const EdgeInsets.only(top: 12.0, bottom: 12, left: 16.0),
+              //     decoration: BoxDecoration(
+              //       color: Colors.grey.shade200,
+              //       borderRadius: BorderRadius.circular(6.0),
+              //     ),
+              //     child: Wrap(
+              //       spacing: 10.0,
+              //       children: [
+              //         Icon(
+              //           Icons.circle_outlined,
+              //           color: Colors.grey.shade600,
+              //         ),
+              //         Text(
+              //           _searchController.pickUpCityName.text.isEmpty
+              //               ? 'Leaving from'
+              //               : _searchController.pickUpCityName.text,
+              //           style: TextStyle(
+              //               color: _searchController.pickUpCityName.text.isEmpty
+              //                   ? Colors.grey.shade700
+              //                   : Colors.black87,
+              //               fontSize: 16.0),
+              //           textAlign: TextAlign.left,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              CustomTextField(
+                controller: _searchController.pickUpCityName,
+                prefixIcon: Icons.circle_outlined,
+                hintText: 'Leaving from',
+                onTap: () => Get.to(() => const GooglePlacePickerScreen()),
               ),
               const SizedBox(height: 8.0),
-              InkWell(
-                onTap: () => Get.toNamed(SearchLocationScreen.routeName),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(top: 12.0, bottom: 12, left: 16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  child: Wrap(
-                    spacing: 10.0,
-                    children: [
-                      Icon(
-                        Icons.circle_outlined,
-                        color: Colors.grey.shade600,
-                      ),
-                      Text(
-                        _searchController.dropOffCityName.text.isEmpty
-                            ? 'Going to'
-                            : _searchController.dropOffCityName.text,
-                        style: TextStyle(
-                            color: _searchController.dropOffCityName.text.isEmpty
-                                ? Colors.grey.shade700
-                                : Colors.black87,
-                            fontSize: 16.0),
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
-                ),
+              CustomTextField(
+                controller: _searchController.dropOffCityName,
+                prefixIcon: Icons.circle_outlined,
+                hintText: 'Going to',
+                onTap: () =>
+                    Get.to(() => const GooglePlacePickerScreen(isSelectdropOffAddress: true)),
               ),
               const SizedBox(height: 8.0),
               DateTimeField(
@@ -185,7 +140,7 @@ class SearchScreen extends StatelessWidget {
               CustomAsyncBtn(
                 btntxt: 'Search',
                 onPress: () {
-                  if (_searchController.pickUpCityId.text.isNotEmpty) {
+                  if (_searchController.pickUpCityName.text.isNotEmpty) {
                     Get.toNamed(
                       SearchResultScreen.routeName,
                       arguments: {
@@ -205,7 +160,7 @@ class SearchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentSearchHistoryView(SearchHistory searchItem) {
+  Widget _buildRecentSearchHistoryView() {
     return Column(
       children: [
         ListTile(
@@ -214,16 +169,16 @@ class SearchScreen extends StatelessWidget {
           title: Wrap(
             spacing: 10.0,
             children: [
-              Text(searchItem.leavingPlace),
+              Text('Karachi'),
               Icon(
                 Icons.arrow_forward,
                 color: Colors.grey.shade600,
                 size: 20.0,
               ),
-              Text(searchItem.leavingPlace),
+              Text('Islamabad'),
             ],
           ),
-          subtitle: Text('${searchItem.date} ${searchItem.passengers}'),
+          subtitle: Text('26 Mar 2022 3'),
           trailing: const Icon(Icons.arrow_forward_ios_rounded),
         ),
       ],

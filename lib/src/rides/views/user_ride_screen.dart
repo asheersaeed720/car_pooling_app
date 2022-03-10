@@ -1,68 +1,20 @@
-import 'package:car_pooling_app/src/ride/models/ride_model.dart';
+import 'package:car_pooling_app/src/rides/models/ride_model.dart';
 import 'package:car_pooling_app/utils/constants.dart';
+import 'package:car_pooling_app/widgets/ride_request_item.dart';
 import 'package:flutter/material.dart';
 
-class UserRiderScreen extends StatefulWidget {
-  const UserRiderScreen({Key? key}) : super(key: key);
+class UserRideScreen extends StatefulWidget {
+  const UserRideScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserRiderScreen> createState() => _UserRiderScreenState();
+  State<UserRideScreen> createState() => _UserRideScreenState();
 }
 
 enum UserStatusFilter { ongoing, complete, cancel }
 
-List<RideModel> _userRideDataList = [
-  RideModel(
-    pickUpTime: '16:40',
-    dropOffTime: '19:10',
-    pickUpCity: 'Karachi',
-    dropOffCity: 'Islamabad',
-    riderName: 'Hassan Jahangir',
-    profilePic: 'assets/images/no_img_available.jpg',
-    rating: 4.0,
-    price: '700',
-    availableSlots: '2',
-    status: UserStatusFilter.ongoing,
-  ),
-  RideModel(
-    pickUpTime: '23:00',
-    dropOffTime: '19:10',
-    pickUpCity: 'Hyderabad',
-    dropOffCity: 'Lahore',
-    riderName: 'Aslam Babu',
-    profilePic: 'assets/images/no_img_available.jpg',
-    rating: 3.0,
-    price: '600',
-    availableSlots: '2',
-    status: UserStatusFilter.ongoing,
-  ),
-  RideModel(
-    pickUpTime: '15:00',
-    dropOffTime: '21:30',
-    pickUpCity: 'Karachi',
-    dropOffCity: 'Abbottabad',
-    riderName: 'Jameel Khan',
-    profilePic: 'assets/images/no_img_available.jpg',
-    rating: 4.5,
-    price: '1200',
-    availableSlots: '1',
-    status: UserStatusFilter.complete,
-  ),
-  RideModel(
-    pickUpTime: '13:50',
-    dropOffTime: '17:10',
-    pickUpCity: 'Rawalpindi',
-    dropOffCity: 'Islamabad',
-    riderName: 'Zain Chugtai',
-    profilePic: 'assets/images/person.jpeg',
-    rating: 5.0,
-    price: '500',
-    availableSlots: '1',
-    status: UserStatusFilter.cancel,
-  ),
-];
+List<RideRequest> _userRideDataList = [];
 
-class _UserRiderScreenState extends State<UserRiderScreen> {
+class _UserRideScreenState extends State<UserRideScreen> {
   UserStatusFilter status = UserStatusFilter.ongoing;
   Alignment _alignment = Alignment.centerLeft;
 
@@ -72,7 +24,7 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
     //   return schedule['status'] == status;
     // }).toList();
 
-    List<RideModel> filteredRides =
+    List<RideRequest> filteredRides =
         _userRideDataList.where((var ride) => ride.status == status).toList();
 
     return Scaffold(
@@ -154,75 +106,7 @@ class _UserRiderScreenState extends State<UserRiderScreen> {
                 itemBuilder: (context, index) {
                   var _ride = filteredRides[index];
                   bool isLastElement = filteredRides.length + 1 == index;
-                  return Card(
-                    margin: !isLastElement ? const EdgeInsets.only(bottom: 20) : EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage(_ride.profilePic),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    _ride.riderName,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  const Text(
-                                    '_schedule',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const DateTimeCard(),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  child: const Text('Cancel'),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  child: const Text('Reschedule'),
-                                  onPressed: () => {},
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                  return const RideRequestItem();
                 },
               ),
             )

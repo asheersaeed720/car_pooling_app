@@ -1,6 +1,6 @@
 import 'package:car_pooling_app/src/account/account_screen.dart';
-import 'package:car_pooling_app/src/ride/views/add_ride_screen.dart';
-import 'package:car_pooling_app/src/ride/views/user_ride_screen.dart';
+import 'package:car_pooling_app/src/rides/views/add_ride_screen.dart';
+import 'package:car_pooling_app/src/rides/views/user_ride_screen.dart';
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class TabScreen extends StatelessWidget {
     List<Widget> _widgetOptions = <Widget>[
       SearchScreen(),
       const AddRideScreen(),
-      const UserRiderScreen(),
+      const UserRideScreen(),
       const ChatScreen(),
       AccountScreen(),
     ];
