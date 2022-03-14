@@ -1,3 +1,4 @@
+import 'package:car_pooling_app/src/account/car_modal_bottom_sheet.dart';
 import 'package:car_pooling_app/src/auth/auth_controller.dart';
 import 'package:car_pooling_app/utils/constants.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
@@ -189,6 +190,22 @@ class AccountScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10.0),
+        ListTile(
+          onTap: () async {
+            addCarModalBottomSheet(context);
+          },
+          title: const Text(
+            'Add Car',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 16.0,
+              color: Colors.black54,
+            ),
+          ),
+          trailing: const Icon(Icons.arrow_forward_ios_rounded),
+        ),
+        const Divider(thickness: 1.0, height: 20.0),
         ListTile(
           onTap: () async {
             // await launch('https://travelbegin.restncode.com/privacy-policy.html');

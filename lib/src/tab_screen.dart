@@ -17,7 +17,7 @@ class TabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
       SearchScreen(),
-      const AddRideScreen(),
+      AddRideScreen(),
       const UserRideScreen(),
       const ChatScreen(),
       AccountScreen(),
