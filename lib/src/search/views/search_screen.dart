@@ -132,7 +132,10 @@ class SearchScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               DateTimeField(
                 format: DateFormat.yMMMEd(),
-                decoration: const InputDecoration(hintText: 'Date'),
+                decoration: const InputDecoration(
+                  hintText: 'Date',
+                  prefixIcon: Icon(Icons.date_range),
+                ),
                 onShowPicker: (context, currentValue) async {
                   final time = await showTimePicker(
                     context: context,
