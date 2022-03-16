@@ -10,10 +10,12 @@ import 'package:get/get.dart';
 class SearchController extends GetxController {
   final _searchService = Get.put(SearchService());
 
-  TextEditingController pickUpCityId = TextEditingController(text: '');
-  TextEditingController dropOffCityId = TextEditingController(text: '');
-  TextEditingController pickUpCityName = TextEditingController(text: '');
-  TextEditingController dropOffCityName = TextEditingController(text: '');
+  TextEditingController pickUpAddress = TextEditingController(text: '');
+  TextEditingController pickUpLat = TextEditingController(text: '');
+  TextEditingController pickUpLong = TextEditingController(text: '');
+  TextEditingController dropOffAddress = TextEditingController(text: '');
+  TextEditingController dropOffLat = TextEditingController(text: '');
+  TextEditingController dropOffLong = TextEditingController(text: '');
 
   List<CityModel> citiesList = [];
 

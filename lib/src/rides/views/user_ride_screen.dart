@@ -1,174 +1,138 @@
-import 'package:car_pooling_app/src/rides/models/ride_model.dart';
+import 'dart:developer';
+
 import 'package:car_pooling_app/utils/constants.dart';
-import 'package:car_pooling_app/widgets/ride_request_item.dart';
+import 'package:car_pooling_app/widgets/cache_img_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class UserRideScreen extends StatefulWidget {
-  const UserRideScreen({Key? key}) : super(key: key);
+class UserRidesScreen extends StatelessWidget {
+  const UserRidesScreen({Key? key}) : super(key: key);
 
-  @override
-  State<UserRideScreen> createState() => _UserRideScreenState();
-}
-
-enum UserStatusFilter { ongoing, complete, cancel }
-
-List<RideRequest> _userRideDataList = [];
-
-class _UserRideScreenState extends State<UserRideScreen> {
-  UserStatusFilter status = UserStatusFilter.ongoing;
-  Alignment _alignment = Alignment.centerLeft;
+  final TextStyle kRideTextStyle = const TextStyle(
+    fontWeight: FontWeight.bold,
+    color: primaryColor,
+    fontSize: 16.0,
+  );
 
   @override
   Widget build(BuildContext context) {
-    // List<Map> filteredSchedules = schedules.where((var schedule) {
-    //   return schedule['status'] == status;
-    // }).toList();
-
-    List<RideRequest> filteredRides =
-        _userRideDataList.where((var ride) => ride.status == status).toList();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Rides'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            labelColor: primaryColor,
+            tabs: [
+              Tab(text: 'Taken Rides'),
+              Tab(text: 'Given Rides'),
+            ],
+          ),
+          title: const Text('My Rides'),
+        ),
+        body: TabBarView(
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      for (UserStatusFilter filterStatus in UserStatusFilter.values)
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (filterStatus == UserStatusFilter.ongoing) {
-                                  status = UserStatusFilter.ongoing;
-                                  _alignment = Alignment.centerLeft;
-                                } else if (filterStatus == UserStatusFilter.complete) {
-                                  status = UserStatusFilter.complete;
-                                  _alignment = Alignment.center;
-                                } else if (filterStatus == UserStatusFilter.cancel) {
-                                  status = UserStatusFilter.cancel;
-                                  _alignment = Alignment.centerRight;
-                                }
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                filterStatus.name.capitalize(),
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                AnimatedAlign(
-                  duration: const Duration(milliseconds: 200),
-                  alignment: _alignment,
-                  child: Container(
-                    width: 100,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                      child: Text(
-                        status.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: filteredRides.length,
-                itemBuilder: (context, index) {
-                  var _ride = filteredRides[index];
-                  bool isLastElement = filteredRides.length + 1 == index;
-                  return const RideRequestItem();
-                },
-              ),
+            const Text('Taken Rides'),
+            ListView.separated(
+              itemBuilder: (context, i) {
+                return _buildGivenRidesView();
+              },
+              separatorBuilder: (context, _) => const SizedBox(height: 10.0),
+              itemCount: 1,
             )
           ],
         ),
       ),
     );
   }
-}
 
-class DateTimeCard extends StatelessWidget {
-  const DateTimeCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildGivenRidesView() {
     return Container(
+      margin: const EdgeInsets.all(18.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: const [
-              Icon(
-                Icons.calendar_today,
-                color: primaryColor,
-                size: 15,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Mon, July 29',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
           ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const CacheImgWidget('', isProfilePic: true),
+            title: Text(
+              'Name',
+              style: kRideTextStyle,
+            ),
+            subtitle: RatingBar.builder(
+              itemSize: 18.0,
+              initialRating: 4.0,
+              minRating: 1,
+              direction: Axis.horizontal,
+              itemCount: 5,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              itemBuilder: (context, i) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) {
+                log('$rating');
+              },
+            ),
+            trailing: Text(
+              'Rs.900.00',
+              style: kRideTextStyle,
+            ),
+          ),
+          const SizedBox(height: 14.0),
           Row(
-            children: const [
-              Icon(
-                Icons.access_alarm,
-                color: primaryColor,
-                size: 17,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '11:00 ~ 12:10',
-                style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
+            children: [
+              IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '21:30',
+                          style: kRideTextStyle,
+                        ),
+                        const SizedBox(height: 32.0),
+                        Text(
+                          '05:20',
+                          style: kRideTextStyle,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 10.0),
+                    const VerticalDivider(
+                      color: primaryColor,
+                      indent: 10.0,
+                      endIndent: 10.0,
+                      thickness: 1.5,
+                    ),
+                    const SizedBox(width: 10.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'North Karachi',
+                          style: kRideTextStyle,
+                        ),
+                        const SizedBox(height: 32.0),
+                        Text(
+                          'New Landhi',
+                          style: kRideTextStyle,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],

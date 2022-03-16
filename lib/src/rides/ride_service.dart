@@ -3,23 +3,38 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class RideService extends GetConnect {
-  Future<Response> addRide() async {
+  Future<Response> addRide({
+    required String pickUpAddress,
+    required String pickUpDate,
+    required String pickUpTime,
+    required String pickUpLat,
+    required String pickUpLong,
+    required String dropOffAddress,
+    required String dropOffDate,
+    required String dropOffTime,
+    required String dropOffLat,
+    required String dropOffLong,
+    required String price,
+    required String passenger,
+  }) async {
     var data = FormData({
-      'car_id': '1',
-      'from_city_id': '1',
-      'from_lat': '24.8607',
-      'from_long': '67.0011',
-      'to_city_id': '2',
-      'to_lat': '31.5204',
-      'to_long': '74.3587',
-      'capacity': '1',
-      'rate': '3000',
-      'pick_up_time': '12:00',
-      'drop_off_time': '04:00',
+      'pickup': pickUpAddress,
+      'pickup_date': pickUpDate,
+      'pickup_time': pickUpTime,
+      'pickup_lat': pickUpLat,
+      'pickup_long': pickUpLong,
+      'drop': dropOffAddress,
+      'drop_date': dropOffDate,
+      'drop_time': dropOffTime,
+      'drop_lat': dropOffLat,
+      'drop_long': dropOffLong,
+      'price': price,
+      'passenger': passenger,
+      'instruction': '',
     });
 
     return post(
-      '$apiURL/Trips/create',
+      '$apiURL/Trips/address',
       data,
       contentType: 'form-data',
       headers: {'x-api-key': GetStorage().read('user')['key']},

@@ -13,7 +13,10 @@ class SearchResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arg = Get.arguments as Map<String, dynamic>;
+    Map<String, dynamic>? arg;
+    if (arg != null) {
+      arg = Get.arguments as Map<String, dynamic>;
+    }
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black87),

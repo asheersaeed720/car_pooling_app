@@ -26,9 +26,9 @@ class GooglePlacePickerScreen extends StatelessWidget {
         //usePlaceDetailSearch: true,
         onPlacePicked: (result) {
           if (isSelectdropOffAddress) {
-            searchController.dropOffCityName.text = result.formattedAddress ?? '';
+            searchController.dropOffAddress.text = result.formattedAddress ?? '';
           } else {
-            searchController.pickUpCityName.text = result.formattedAddress ?? '';
+            searchController.pickUpAddress.text = result.formattedAddress ?? '';
           }
           searchController.update();
           Get.back();

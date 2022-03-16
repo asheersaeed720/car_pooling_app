@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:car_pooling_app/src/place_picker/google_place_picker_screen.dart';
 import 'package:car_pooling_app/src/search/search_controller.dart';
 import 'package:car_pooling_app/src/search/views/search_result_screen.dart';
 import 'package:car_pooling_app/utils/constants.dart';
-import 'package:car_pooling_app/utils/display_toast_message.dart';
 import 'package:car_pooling_app/widgets/custom_async_btn.dart';
 import 'package:car_pooling_app/widgets/custom_text_field.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -19,6 +20,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('pickUpAddress ${_searchController.pickUpAddress.text}');
     return GetBuilder<SearchController>(
       builder: (_) => ListView(
         children: [
@@ -111,18 +113,21 @@ class SearchScreen extends StatelessWidget {
               //   ),
               // ),
               CustomTextField(
-                controller: _searchController.pickUpCityName,
+                controller: _searchController.pickUpAddress,
                 prefixIcon: Icons.circle_outlined,
                 hintText: 'Leaving from',
-                onTap: () => Get.to(() => const GooglePlacePickerScreen()),
+                onTap: () => Get.to(
+                  () => const GooglePlacePickerScreen(),
+                ),
               ),
               const SizedBox(height: 8.0),
               CustomTextField(
-                controller: _searchController.dropOffCityName,
+                controller: _searchController.dropOffAddress,
                 prefixIcon: Icons.circle_outlined,
                 hintText: 'Going to',
-                onTap: () =>
-                    Get.to(() => const GooglePlacePickerScreen(isSelectdropOffAddress: true)),
+                onTap: () => Get.to(
+                  () => const GooglePlacePickerScreen(isSelectdropOffAddress: true),
+                ),
               ),
               const SizedBox(height: 8.0),
               DateTimeField(
@@ -140,17 +145,11 @@ class SearchScreen extends StatelessWidget {
               CustomAsyncBtn(
                 btntxt: 'Search',
                 onPress: () {
-                  if (_searchController.pickUpCityName.text.isNotEmpty) {
-                    Get.toNamed(
-                      SearchResultScreen.routeName,
-                      arguments: {
-                        'pick_city_id': _searchController.pickUpCityId.text,
-                        'dropoff_city_id': _searchController.dropOffCityId.text
-                      },
-                    );
-                  } else {
-                    displayToastMessage('Select City');
-                  }
+                  // if (_searchController.pickUpAddress.text.isNotEmpty) {
+                  // } else {
+                  //   displayToastMessage('Select City');
+                  // }
+                  Get.toNamed(SearchResultScreen.routeName);
                 },
               ),
             ],

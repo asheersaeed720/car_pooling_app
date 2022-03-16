@@ -31,8 +31,8 @@ class HeaderWidget extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                width: 80.0,
-                height: 80.0,
+                width: 100.0,
+                height: 100.0,
               ),
             ],
           ),
